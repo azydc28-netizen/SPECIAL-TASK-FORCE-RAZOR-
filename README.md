@@ -108,4 +108,4 @@ Every operation, every decision, every shot counts. Command your squad, complete
 
 - Run the Python script:  
   ```bash
-  python razor.py
+  specialforces.py
