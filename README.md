@@ -1,70 +1,69 @@
-# 📡 LIVE RADIO TRANSMISSION  
-## SPECIAL TASK FORCE 457 "RAZOR"
+# 📡 RADIO TRANSMISSION: SPECIAL TASK FORCE 457 "RAZOR"
 
-**Signal:** Stable  
-**Channel:** Secure  
-**Audience:** Operator / Programmer  
-
----
-
-### COMMAND, THIS IS RAZOR
-
-What you are running is a **text-based Python tactical simulator**.  
-No graphics. No mouse. Only commands, choices, and consequences.
-
-This transmission explains **exactly how the program operates**, from launch to shutdown.
+**Transmission Code:** RAZOR-OPERATOR-BRIEF  
+**Date:** Classified  
+**Origin:** Special Task Force 457 Command  
 
 ---
 
-## 🔧 PROGRAM BOOT SEQUENCE
+### **COMMANDER, LISTEN UP**
 
-1. The program starts by loading:
-   - Operator data (name, rank, XP, HP, team, weapon)
-   - Weapon database
-   - Mission list
-   - Difficulty settings
-   - Rank progression table
+You are now **active duty** in **Special Task Force 457 "RAZOR"**. All communications are operational. Your callsign will define your mission. Follow orders, choose your team, and complete objectives. Lives depend on your decisions.
 
-2. You are prompted to enter a **callsign**.
-3. You are automatically issued a **standard M4A1**.
-4. You must immediately **select a team**.
+**SPECIAL TASK FORCE 457 "RAZOR"** is a text-based tactical combat simulation written in Python.  
+The program places the player in command of a special forces operator, allowing them to manage equipment, choose teams, and complete combat missions through a command-line interface.
 
-Once this is done, the program enters a **continuous command loop**.
+This project is designed as a **menu-driven simulation** and is ideal for learning basic Python concepts such as loops, dictionaries, conditionals, and state management.
 
 ---
 
-## 🧭 MAIN COMMAND LOOP (CORE OF THE PROGRAM)
+## 📌 Program Description
 
-The program now repeats the following steps until you exit:
+The program simulates a special forces command environment where the player:
 
-1. **Update Rank**
-   - Rank is recalculated every loop using:
-     ```
-     XP // 150
-     ```
-   - Rank changes automatically. No manual promotion.
+- Creates an operator using a callsign
+- Selects a combat team
+- Purchases and equips weapons using experience points (XP)
+- Deploys on missions with different difficulty levels
+- Engages in turn-based combat
+- Earns XP and ranks up based on mission performance
 
-2. **Display Command Menu**
-
-Check Profile
-
-Change Team
-
-Visit Armory
-
-Start Mission
-
-Exit Operation
-
-3. **Wait for User Input**
-- Your choice determines which block of code runs next.
-- Invalid input returns you to the menu.
+All gameplay is text-based and controlled through keyboard input.
 
 ---
 
-## 📄 OPTION 1: CHECK PROFILE
+## ⚙️ How the Program Works
 
-Displays current operator data:
+### 1. Operator Initialization
+When the program starts:
+- The player enters a **callsign**
+- The operator is assigned:
+  - Rank: Recruit
+  - Health (HP): 100
+  - XP: 0
+  - Default weapon: M4A1
+- The player selects one of three teams:
+  - Alpha Team – Direct Assault
+  - Bravo Team – Recon & Stealth
+  - Charlie Team – Heavy Support
+
+---
+
+### 2. Main Command Loop
+After setup, the program enters a continuous loop that displays the **Command Menu**:
+
+- Check Profile
+- Change Team
+- Visit Armory
+- Start Mission
+- Exit Operation
+
+The program keeps running until the user chooses to exit.
+
+---
+
+### 3. Operator Profile
+This option displays the operator’s current status:
 - Callsign
 - Rank
 - XP
@@ -72,133 +71,79 @@ Displays current operator data:
 - Equipped weapon
 - Current HP
 
-No data is modified here.  
-This option is **read-only**.
+No values are modified in this section.
 
 ---
 
-## 🔁 OPTION 2: CHANGE TEAM
-
-- Re-displays the team list.
-- Updates `operator["team"]` based on input.
-- Team change does not affect stats directly.
-- Used mainly for role-play and immersion.
+### 4. Team Selection
+The player may switch teams at any time.  
+This updates the operator’s assigned team but does not directly affect combat statistics.
 
 ---
 
-## 🔫 OPTION 3: VISIT ARMORY
+### 5. Armory System
+The armory allows the player to:
+- View all available weapons
+- See weapon damage and XP cost
+- Purchase and equip weapons if sufficient XP is available
 
-1. The program lists **all weapons** with:
-- Code
-- Name
-- Type
-- Damage
-- XP cost
-
-2. You enter a weapon code.
-3. The program checks:
-- Does the weapon exist?
-- Do you have enough XP?
-
-4. If both checks pass:
-- XP is reduced
-- Weapon is equipped immediately
-
-No refunds. XP spent is permanent.
+XP is permanently deducted when a weapon is purchased.
 
 ---
 
-## 🚁 OPTION 4: START MISSION
+### 6. Mission System
+When starting a mission, the player:
+1. Selects a mission type
+2. Selects a difficulty level:
+   - Easy
+   - Normal
+   - Hard
+   - Extreme
 
-This option triggers the **combat system**.
-
-### STEP 1: Mission Selection
-You choose one mission from a predefined list.
-
-### STEP 2: Difficulty Selection
 Difficulty affects:
-- Enemy HP
+- Enemy health
 - Enemy damage
-- XP reward
+- XP rewards
 
-### STEP 3: Combat Initialization
-- Enemy HP = `150 × difficulty multiplier`
-- Player HP = current operator HP
+Enemy health is calculated based on the selected difficulty.
 
 ---
 
-## ⚔️ COMBAT LOOP (MISSION CORE)
+### 7. Combat Mechanics
+Combat is turn-based and continues until:
+- The enemy is defeated
+- The player’s HP reaches zero
+- The player retreats
 
-The program now enters a second loop that runs **until someone drops or you retreat**.
+Each combat round allows the player to:
+- Fire their weapon (deal randomized damage)
+- Perform a tactical maneuver (restore HP)
+- Retreat from the mission
 
-Each round follows this exact order:
+After the player’s action, the enemy counterattacks.
 
-1. Display:
-- Player HP
-- Enemy HP
+---
 
-2. Prompt action:
-
-
-Fire Weapon
-
-Tactical Maneuver
-
-Retreat
-
-
-3. Resolve player action:
-- **Fire Weapon**
-  - Damage is randomized based on weapon stats.
-  - Enemy HP decreases.
-- **Tactical Maneuver**
-  - Player regains random HP.
+### 8. Mission Outcomes
+- **Mission Success**
+  - Enemy HP reaches zero
+  - Player gains XP
+- **Mission Failure**
+  - Player HP reaches zero
+  - HP penalty applied
 - **Retreat**
-  - Mission ends immediately with HP penalty.
+  - Mission ends early
+  - Reduced HP, no XP gain
 
-4. Enemy attacks (unless you retreated):
-- Damage is randomized.
-- Scaled by difficulty.
-- Player HP decreases.
-
-5. Loop repeats.
+The player’s HP is never allowed to drop below a minimum threshold after missions.
 
 ---
 
-## 🏁 MISSION END CONDITIONS
+### 9. Rank Progression
+Ranks are automatically updated based on XP:
 
-### SUCCESS
-- Enemy HP reaches zero first.
-- XP is awarded:
-
-
-70 × difficulty multiplier
-
-- Player returns to command menu.
-
-### FAILURE
-- Player HP reaches zero.
-- HP penalty applied.
-- No XP gained.
-
-### RETREAT
-- Mission aborted manually.
-- Reduced HP.
-- No XP gained.
-
-After any outcome:
-- HP is clamped to a minimum of 50.
-- Rank is recalculated.
-- Control returns to main menu.
-
----
-
-## 🎖️ RANK SYSTEM LOGIC
-
-Rank is purely XP-based:
-
-| XP | Rank |
-|----|------|
+| XP Range | Rank |
+|--------|------|
 | 0–149 | Recruit |
 | 150–299 | Private |
 | 300–449 | Corporal |
@@ -207,38 +152,35 @@ Rank is purely XP-based:
 | 750–899 | Captain |
 | 900+ | Major |
 
-No rank affects combat yet.  
-Rank is **progress tracking and immersion**.
+Rank updates occur inside the main loop and require no manual input.
 
 ---
 
-## 🧠 IMPORTANT PROGRAM NOTES
+## 🛠️ Technical Notes
 
-- There are **no functions**; code runs sequentially.
-- No save system. Progress resets on restart.
-- All randomness comes from Python’s `random` module.
-- Every menu is input-driven and blocking.
-- Invalid input never crashes the program; it redirects.
-
----
-
-## 📴 PROGRAM SHUTDOWN
-
-Selecting **Exit Operation**:
-- Calls `sys.exit()`
-- Terminates the program cleanly.
+- Written in **basic Python**
+- Uses only standard libraries:
+  - `random`
+  - `sys`
+- No functions (`def`) are used
+- All logic runs sequentially
+- No save system (progress resets on restart)
+- Designed for clarity and learning, not optimization
 
 ---
 
-### FINAL TRANSMISSION
+## 🚪 Exiting the Program
 
-This program is a **command-line simulation**, not a full game engine.  
-Its strength is clarity, structure, and logic flow.
+Selecting **Exit Operation** cleanly terminates the program using `sys.exit()`.
 
-Ideal for:
-- Beginners learning control flow
-- Menu-driven programs
-- Loops and state management
-- Text-based game logic
+## **ABOUT SPECIAL TASK FORCE 457 "RAZOR"**
 
-**RAZOR OUT. SIGNAL TERMINATED.**
+**RAZOR** is a fictional elite counter-terrorism unit. Operators execute high-risk, precision missions globally. You are trained to adapt, strategize, and survive.  
+
+- Decisions matter.  
+- Lives depend on your choices.  
+- Operate with precision.
+
+> **End Transmission**
+
+---
