@@ -1,77 +1,201 @@
-# 📡 RADIO TRANSMISSION: SPECIAL TASK FORCE 457 "RAZOR"
+# 📡 LIVE RADIO TRANSMISSION  
+## SPECIAL TASK FORCE 457 "RAZOR"
 
-**Transmission Code:** RAZOR-OPERATOR-BRIEF  
-**Date:** Classified  
-**Origin:** Special Task Force 457 Command  
-
----
-
-### **HEY! YOU THERE, LISTEN UP!**
-
-You are now **active special operative** in **Special Task Force 457 "RAZOR"**. All communications are operational. Your callsign will define your mission. Follow orders, choose your team, and complete objectives. Lives depend on your decisions.
+**Signal:** Stable  
+**Channel:** Secure  
+**Audience:** Operator / Programmer  
 
 ---
 
-## **MISSION BRIEFING**
+### COMMAND, THIS IS RAZOR
 
-This is **RAZOR**. You will operate with one of the following elite squads:
+What you are running is a **text-based Python tactical simulator**.  
+No graphics. No mouse. Only commands, choices, and consequences.
 
-- **Alpha Team – Direct Assault:** Frontline strikes, heavy engagement.  
-- **Bravo Team – Recon & Stealth:** Intelligence gathering, silent takedowns.  
-- **Charlie Team – Heavy Support:** Firepower specialists, suppress enemy fortifications.  
-
-You begin as a **Recruit**. Your arsenal is basic, but your skill and XP will unlock **higher ranks and superior weaponry**. Complete missions, survive encounters, and earn your place among the elite.
+This transmission explains **exactly how the program operates**, from launch to shutdown.
 
 ---
 
-## **OPERATOR STATUS REPORT**
+## 🔧 PROGRAM BOOT SEQUENCE
 
-- **Check Profile:** Your current callsign, rank, weapon, team, XP, and health.  
-- **Change Team:** Reassign to the squad that fits the mission or strategy.  
-- **Armory Access:** Equip weapons using accumulated XP. Choices include Assault Rifles, SMGs, Snipers, LMGs, Shotguns, and Sidearms.  
-- **Mission Deployment:** Select operation and difficulty. Engage enemies, make tactical maneuvers, or retreat if the situation goes critical.  
+1. The program starts by loading:
+   - Operator data (name, rank, XP, HP, team, weapon)
+   - Weapon database
+   - Mission list
+   - Difficulty settings
+   - Rank progression table
 
-> **Warning:** Health does not fully restore between missions. Tactical decisions affect survival.
+2. You are prompted to enter a **callsign**.
+3. You are automatically issued a **standard M4A1**.
+4. You must immediately **select a team**.
 
----
-
-## **MISSIONS ACTIVE**
-
-Prepare for:
-
-1. **Hostage Rescue** – Civilians trapped, extract them safely.  
-2. **Search and Destroy** – Neutralize enemy positions.  
-3. **Covert Infiltration** – Silent entry, minimal engagement.  
-4. **Direct Assault** – All guns blazing.  
-5. **High-Value Target Elimination** – Strike enemy leadership.  
-
-Difficulty settings alter enemy strength:
-
-- **Easy:** Light resistance. Rookie-level operation.  
-- **Normal:** Standard engagement. Expect casualties.  
-- **Hard:** Heavy resistance. Only skilled operators survive.  
-- **Extreme:** Maximum threat. Only the elite will prevail.  
+Once this is done, the program enters a **continuous command loop**.
 
 ---
 
-## **WEAPONS LOGISTICS**
+## 🧭 MAIN COMMAND LOOP (CORE OF THE PROGRAM)
 
-Weapon inventory available for XP purchase:
+The program now repeats the following steps until you exit:
 
-- **Assault Rifles:** Balanced, reliable damage.  
-- **SMGs:** Fast-firing, ideal for close-quarters combat.  
-- **Sniper Rifles:** Long-range elimination.  
-- **LMGs:** Suppressive fire, heavy ammo expenditure.  
-- **Shotguns:** Devastating up close.  
-- **Sidearms:** Backup weapons, reliable in tight spots.  
+1. **Update Rank**
+   - Rank is recalculated every loop using:
+     ```
+     XP // 150
+     ```
+   - Rank changes automatically. No manual promotion.
 
-> Choose wisely, Commander. Your loadout could be the difference between mission success and failure.
+2. **Display Command Menu**
+
+Check Profile
+
+Change Team
+
+Visit Armory
+
+Start Mission
+
+Exit Operation
+
+3. **Wait for User Input**
+- Your choice determines which block of code runs next.
+- Invalid input returns you to the menu.
 
 ---
 
-## **RANK PROGRESSION**
+## 📄 OPTION 1: CHECK PROFILE
 
-Rank increases automatically as you gain experience points (XP):
+Displays current operator data:
+- Callsign
+- Rank
+- XP
+- Team
+- Equipped weapon
+- Current HP
+
+No data is modified here.  
+This option is **read-only**.
+
+---
+
+## 🔁 OPTION 2: CHANGE TEAM
+
+- Re-displays the team list.
+- Updates `operator["team"]` based on input.
+- Team change does not affect stats directly.
+- Used mainly for role-play and immersion.
+
+---
+
+## 🔫 OPTION 3: VISIT ARMORY
+
+1. The program lists **all weapons** with:
+- Code
+- Name
+- Type
+- Damage
+- XP cost
+
+2. You enter a weapon code.
+3. The program checks:
+- Does the weapon exist?
+- Do you have enough XP?
+
+4. If both checks pass:
+- XP is reduced
+- Weapon is equipped immediately
+
+No refunds. XP spent is permanent.
+
+---
+
+## 🚁 OPTION 4: START MISSION
+
+This option triggers the **combat system**.
+
+### STEP 1: Mission Selection
+You choose one mission from a predefined list.
+
+### STEP 2: Difficulty Selection
+Difficulty affects:
+- Enemy HP
+- Enemy damage
+- XP reward
+
+### STEP 3: Combat Initialization
+- Enemy HP = `150 × difficulty multiplier`
+- Player HP = current operator HP
+
+---
+
+## ⚔️ COMBAT LOOP (MISSION CORE)
+
+The program now enters a second loop that runs **until someone drops or you retreat**.
+
+Each round follows this exact order:
+
+1. Display:
+- Player HP
+- Enemy HP
+
+2. Prompt action:
+
+
+Fire Weapon
+
+Tactical Maneuver
+
+Retreat
+
+
+3. Resolve player action:
+- **Fire Weapon**
+  - Damage is randomized based on weapon stats.
+  - Enemy HP decreases.
+- **Tactical Maneuver**
+  - Player regains random HP.
+- **Retreat**
+  - Mission ends immediately with HP penalty.
+
+4. Enemy attacks (unless you retreated):
+- Damage is randomized.
+- Scaled by difficulty.
+- Player HP decreases.
+
+5. Loop repeats.
+
+---
+
+## 🏁 MISSION END CONDITIONS
+
+### SUCCESS
+- Enemy HP reaches zero first.
+- XP is awarded:
+
+
+70 × difficulty multiplier
+
+- Player returns to command menu.
+
+### FAILURE
+- Player HP reaches zero.
+- HP penalty applied.
+- No XP gained.
+
+### RETREAT
+- Mission aborted manually.
+- Reduced HP.
+- No XP gained.
+
+After any outcome:
+- HP is clamped to a minimum of 50.
+- Rank is recalculated.
+- Control returns to main menu.
+
+---
+
+## 🎖️ RANK SYSTEM LOGIC
+
+Rank is purely XP-based:
 
 | XP | Rank |
 |----|------|
@@ -83,29 +207,38 @@ Rank increases automatically as you gain experience points (XP):
 | 750–899 | Captain |
 | 900+ | Major |
 
-> Promotions unlock tactical privileges, weapons, and respect in the field.
+No rank affects combat yet.  
+Rank is **progress tracking and immersion**.
 
 ---
 
-## **OPERATIONAL NOTES**
+## 🧠 IMPORTANT PROGRAM NOTES
 
-- Always monitor XP for weapon upgrades.  
-- Health is finite; tactical retreats may save lives.  
-- Each mission generates dynamic combat scenarios—expect the unexpected.  
-- Mission success awards XP; failure reduces health and may hinder progression.  
-
----
-
-## **ABOUT SPECIAL TASK FORCE 457 "RAZOR"**
-
-**RAZOR** is an elite counter-terrorism unit. Operations are classified. They engage in high-stakes missions with precision, stealth, and firepower. As an operator, you are the point of the spear—making split-second decisions under extreme pressure. 
-
-Every operation, every decision, every shot counts. Command your squad, complete objectives, and rise through the ranks to lead **RAZOR** to victory.
+- There are **no functions**; code runs sequentially.
+- No save system. Progress resets on restart.
+- All randomness comes from Python’s `random` module.
+- Every menu is input-driven and blocking.
+- Invalid input never crashes the program; it redirects.
 
 ---
 
-## **TERMINAL COMMANDS**
+## 📴 PROGRAM SHUTDOWN
 
-- Run the Python script:  
-  ```bash
-  specialforces.py
+Selecting **Exit Operation**:
+- Calls `sys.exit()`
+- Terminates the program cleanly.
+
+---
+
+### FINAL TRANSMISSION
+
+This program is a **command-line simulation**, not a full game engine.  
+Its strength is clarity, structure, and logic flow.
+
+Ideal for:
+- Beginners learning control flow
+- Menu-driven programs
+- Loops and state management
+- Text-based game logic
+
+**RAZOR OUT. SIGNAL TERMINATED.**
